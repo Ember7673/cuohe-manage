@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-10 18:12:20
+ * @LastEditTime: 2020-12-10 19:05:30
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -13,9 +13,9 @@
           <span class="projectTitle">后台管理系统</span>
         </div>
         <div class="right">
-          <div class="login">
+          <div class="login" v-show="isLogged">
             <img src="" alt="">
-            <span>欢迎，tete</span>
+            <span>欢迎，{{userInfo.account}}</span>
           </div>
           <div class="logout">
             <img src="" alt="">
@@ -53,7 +53,6 @@
           <el-main>
             <router-view />
           </el-main>
-          <el-footer>Footer</el-footer>
         </el-container>
       </el-container>
     </el-container>
@@ -61,12 +60,39 @@
 </template>
 
 <script>
-import { logoutMoudle } from '@/api/login'
+import { logoutMoudle, isLoginMoudle } from '@/api/login'
 import { uuid } from '@/utils';
 export default {
+  data () {
+    return {
+      userInfo: {},
+      isLogged: false
+    }
+  },
+  created () {
+    this.isLogin()
+  },
   methods: {
     handleSelect (key, keyPath) {
       this.$router.push(keyPath[0])
+    },
+    isLogin () {
+      isLoginMoudle({
+        reqid: uuid(),
+        domain: 'mgr'
+      }).then(res => {
+        const {
+          status,
+          user,
+          message
+        } = res.data;
+        if (!status) {
+          this.isLogged = true;
+          this.userInfo = user;
+        } else {
+          this.$message.error(res.data.message);
+        }
+      })
     },
     logout () {
       logoutMoudle({
@@ -79,6 +105,7 @@ export default {
         } = res.data;
         if (!status) {
           this.$message.success('退出登录成功');
+          this.$router.push('/login')
         } else {
           this.$message.error(res.data.message);
         }
@@ -122,7 +149,7 @@ export default {
     float: right;
   }
   .login {
-    width: 80px;
+    width: 140px;
   }
   .logout {
     width: 70px;

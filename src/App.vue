@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-05 10:30:18
- * @LastEditTime: 2020-12-10 14:20:46
+ * @LastEditTime: 2020-12-10 19:16:57
  * @FillPath: Do not edit
 -->
 <template>
@@ -20,4 +20,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#app {
+  background: #eefbfd;
+}
 </style>

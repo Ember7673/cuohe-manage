@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-12-05 10:47:07
- * @LastEditTime: 2020-12-10 18:09:47
+ * @LastEditTime: 2020-12-10 19:17:47
  * @FillPath: Do not edit
  */
 import $http from '@/config/http';
@@ -24,5 +24,11 @@ export const superManageLoginMoudle = (params) => {
 // 登出
 export const logoutMoudle = (params) => {
   let requestUrl = '/official/api/logout';
+  return $http.post(requestUrl, params)
+}
+
+//判断是否登录
+export const isLoginMoudle = (params) => {
+  let requestUrl = '/official/api/get-session-info';
   return $http.post(requestUrl, params)
 }

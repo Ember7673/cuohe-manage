@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 10:30:52
- * @LastEditTime: 2020-12-10 18:27:12
+ * @LastEditTime: 2020-12-10 18:58:35
  * @FilePath: \cuohe-manage\src\views\login\index.vue
 -->
 <template>
@@ -35,7 +35,7 @@
               </el-tab-pane>
               <el-tab-pane label="超级管理员" name="2">
                 <div class="loginbox superManagerLogin">
-                  <el-form :model="supperForm" :rules="rules" ref="supperForm" label-width="100px" class="demo-ruleForm">
+                  <el-form :model="superForm" :rules="rules" ref="superForm" label-width="100px" class="demo-ruleForm">
                     <el-form-item prop="phone_num">
                       <el-input type="tel" tabindex="1" maxlength="11" placeholder="请输入手机号码" v-model="ruleForm.phone_num"></el-input>
                     </el-form-item>
@@ -50,7 +50,7 @@
                       </div>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" @click="submitForm('supperForm')">提交</el-button>
+                      <el-button type="primary" @click="submitForm('superForm')">提交</el-button>
                     </el-form-item>
                   </el-form>
                 </div>
@@ -89,7 +89,7 @@ export default {
         phone_num: '',
         password: '',
       },
-      supperForm: {
+      superForm: {
         phone_num: '',
         password: '',
         valid_num: ''
@@ -119,7 +119,9 @@ export default {
   },
   methods: {
     handleClick (val) {
-      this.loginType = val;
+      this.loginType = val.name;
+      this.$refs['ruleForm'].resetFields()
+      this.$refs['superForm'].resetFields()
     },
     //获取短信验证码
     getSMSCode () {
@@ -162,6 +164,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          console.log(this.loginType)
           if (this.loginType === '1') {
             manageLoginMoudle({
               reqid: uuid(),
@@ -181,24 +184,25 @@ export default {
               }
             })
           } else {
-            superManageLoginMoudle({
-              reqid: uuid(),
-              phone_num: this.ruleForm.phone_num,
-              password: this.$md5(this.ruleForm.password),
-              valid_num: this.ruleForm.valid_num,
-              domain: 'mgr'
-            }).then(res => {
-              const {
-                status,
-                message
-              } = res.data;
-              if (!status) {
-                this.$message.success('登录成功');
-                this.$router.push('/')
-              } else {
-                this.$message.error(res.data.message);
-              }
-            })
+            console.log(this.superForm)
+            // superManageLoginMoudle({
+            //   reqid: uuid(),
+            //   phone_num: this.superForm.phone_num,
+            //   password: this.$md5(this.superForm.password),
+            //   valid_num: this.superForm.valid_num,
+            //   domain: 'mgr'
+            // }).then(res => {
+            //   const {
+            //     status,
+            //     message
+            //   } = res.data;
+            //   if (!status) {
+            //     this.$message.success('登录成功');
+            //     this.$router.push('/')
+            //   } else {
+            //     this.$message.error(res.data.message);
+            //   }
+            // })
           }
         } else {
           console.log('error submit!!');
