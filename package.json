@@ -1,5 +1,5 @@
 {
-  "name": "cuohe-manage",
+  "name": "zhongxin-manage",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,8 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "crypto-js": "^4.0.0",
     "element-ui": "^2.14.1",
+    "js-cookie": "^2.2.1",
+    "js-md5": "^0.7.3",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"

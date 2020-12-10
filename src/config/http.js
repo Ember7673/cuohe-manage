@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-11-16 09:53:29
- * @LastEditTime: 2020-12-05 10:44:57
+ * @LastEditTime: 2020-12-10 17:54:12
  * @FillPath: Do not edit
  */
 import axios from 'axios'
@@ -10,7 +10,7 @@ import Vue from 'vue';
 const vm = Vue.prototype;
 
 const config = {
-  baseURL: '/official/mgr/api/',
+  baseURL: '',
   timeout: 10000,
   withCredentials: false,
   responseType: 'json',

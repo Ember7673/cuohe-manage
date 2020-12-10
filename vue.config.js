@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-11-12 17:00:11
- * @LastEditTime: 2020-12-05 10:42:39
+ * @LastEditTime: 2020-12-08 18:34:44
  * @FillPath: Do not edit
  */
 const path = require('path');
@@ -16,8 +16,8 @@ module.exports = {
   /* 默认情况下，生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存，你可以通过将这个选项设为 false 来关闭文件名哈希。(false的时候就是让原来的文件名不改变) */
   filenameHashing: false,
   devServer: {
-    host: 'www.test.zhongxin.manage.pro',
-    port: 8080,
+    host: 'www.test.manage.zhongxin.pro',
+    port: 8082,
     public: process.env.VUE_APP_PUBLIC_URL,
     disableHostCheck: true,
     open: true,
