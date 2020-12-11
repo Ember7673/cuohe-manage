@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-12-08 18:32:09
- * @LastEditTime: 2020-12-10 14:20:01
+ * @LastEditTime: 2020-12-11 17:11:13
  * @FilePath: \cuohe-manage\src\router\index.js
  */
 import Vue from 'vue'
@@ -11,6 +11,8 @@ import Login from '@/views/login'
 import RequirementList from '@/views/requirement'
 import ResourceList from '@/views/resource'
 import SystemAccount from '@/views/systemAccount'
+import UserList from '@/views/systemAccount/userList'
+import HistoryList from '@/views/systemAccount/history'
 import Layout from '@/components/layout';
 
 
@@ -65,7 +67,28 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: '/userList',
+    component: Layout,
+    children: [
+      {
+        path: '/userList',
+        name: 'UserList',
+        component: UserList,
+      }
+    ]
+  },
+  {
+    path: '/history',
+    component: Layout,
+    children: [
+      {
+        path: '/history',
+        name: 'History',
+        component: HistoryList,
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({

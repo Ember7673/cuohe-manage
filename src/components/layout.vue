@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-10 19:05:30
+ * @LastEditTime: 2020-12-11 18:28:10
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -42,9 +42,17 @@
                 <i class="el-icon-document"></i>
                 <span slot="title">资源列表</span>
               </el-menu-item>
+              <el-menu-item index="/userList">
+                <i class="el-icon-setting"></i>
+                <span slot="title">用户列表</span>
+              </el-menu-item>
               <el-menu-item index="/systemAccount">
                 <i class="el-icon-setting"></i>
                 <span slot="title">系统账户</span>
+              </el-menu-item>
+              <el-menu-item index="/history">
+                <i class="el-icon-setting"></i>
+                <span slot="title">历史记录</span>
               </el-menu-item>
             </el-menu>
           </el-col>
@@ -89,6 +97,7 @@ export default {
         if (!status) {
           this.isLogged = true;
           this.userInfo = user;
+          window.localStorage.setItem('userInfo', JSON.stringify(user))
         } else {
           this.$message.error(res.data.message);
         }
