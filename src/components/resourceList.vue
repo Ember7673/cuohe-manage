@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 16:48:10
- * @LastEditTime: 2020-12-11 17:03:47
+ * @LastEditTime: 2020-12-14 18:05:27
  * @FilePath: \cuohe-manage\src\components\resourceList.vue
 -->
 <template>

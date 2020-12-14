@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-11 18:28:10
+ * @LastEditTime: 2020-12-14 18:27:44
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -25,7 +25,7 @@
       </el-header>
 
       <el-container>
-        <el-aside width="200px" style="background-color: #234D61">
+        <el-aside width="200px" style="height: 100vh;background-color: #234D61">
           <el-col>
             <el-menu default-active="2" @select="handleSelect" class="el-menu-vertical-demo" background-color="#234D61" text-color="#fff" active-text-color="#188F9F">
               <el-menu-item index="/">
@@ -58,7 +58,7 @@
           </el-col>
         </el-aside>
         <el-container>
-          <el-main>
+          <el-main style="height: 100vh;">
             <router-view />
           </el-main>
         </el-container>

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 10:30:52
- * @LastEditTime: 2020-12-10 18:58:35
+ * @LastEditTime: 2020-12-14 18:16:34
  * @FilePath: \cuohe-manage\src\views\login\index.vue
 -->
 <template>
@@ -35,15 +35,15 @@
               </el-tab-pane>
               <el-tab-pane label="超级管理员" name="2">
                 <div class="loginbox superManagerLogin">
-                  <el-form :model="superForm" :rules="rules" ref="superForm" label-width="100px" class="demo-ruleForm">
+                  <el-form :model="superForm" :rules="rules" ref="superForm" label-width="100px">
                     <el-form-item prop="phone_num">
-                      <el-input type="tel" tabindex="1" maxlength="11" placeholder="请输入手机号码" v-model="ruleForm.phone_num"></el-input>
+                      <el-input type="tel" tabindex="1" maxlength="11" placeholder="请输入手机号码" v-model="superForm.phone_num"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
-                      <el-input type="password" tabindex="2" maxlength="16" :show-password="true" placeholder="请输入密码" v-model="ruleForm.password"></el-input>
+                      <el-input type="password" tabindex="2" maxlength="16" :show-password="true" placeholder="请输入密码" v-model="superForm.password"></el-input>
                     </el-form-item>
                     <el-form-item prop="valid_num">
-                      <el-input placeholder="请输入验证码" v-model="ruleForm.valid_num"></el-input>
+                      <el-input placeholder="请输入验证码" v-model="superForm.valid_num"></el-input>
                       <div class="get-code">
                         <span v-if="!isShowTimer" @click="getSMSCode">获取验证码</span>
                         <span v-else>重新发送（{{smsTimer}}）秒</span>
@@ -126,7 +126,7 @@ export default {
     //获取短信验证码
     getSMSCode () {
       const me = this;
-      this.$refs['ruleForm'].validateField(['phone_num'], error => {
+      this.$refs['superForm'].validateField(['phone_num'], error => {
         if (!error) {
           const data = {
             reqid: uuid()
@@ -164,7 +164,6 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.loginType)
           if (this.loginType === '1') {
             manageLoginMoudle({
               reqid: uuid(),
@@ -184,25 +183,24 @@ export default {
               }
             })
           } else {
-            console.log(this.superForm)
-            // superManageLoginMoudle({
-            //   reqid: uuid(),
-            //   phone_num: this.superForm.phone_num,
-            //   password: this.$md5(this.superForm.password),
-            //   valid_num: this.superForm.valid_num,
-            //   domain: 'mgr'
-            // }).then(res => {
-            //   const {
-            //     status,
-            //     message
-            //   } = res.data;
-            //   if (!status) {
-            //     this.$message.success('登录成功');
-            //     this.$router.push('/')
-            //   } else {
-            //     this.$message.error(res.data.message);
-            //   }
-            // })
+            superManageLoginMoudle({
+              reqid: uuid(),
+              phone_num: this.superForm.phone_num,
+              password: this.$md5(this.superForm.password),
+              valid_num: this.superForm.valid_num,
+              domain: 'mgr'
+            }).then(res => {
+              const {
+                status,
+                message
+              } = res.data;
+              if (!status) {
+                this.$message.success('登录成功');
+                this.$router.push('/')
+              } else {
+                this.$message.error(res.data.message);
+              }
+            })
           }
         } else {
           console.log('error submit!!');

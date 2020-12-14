@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:31:51
- * @LastEditTime: 2020-12-14 00:24:34
+ * @LastEditTime: 2020-12-14 18:15:57
  * @FilePath: \cuohe-manage\src\api\systemAccount.js
  */
 import $http from '@/config/http';
@@ -47,8 +47,7 @@ export const deleteUserMoudle = (params) => {
   return $http.post(requestUrl, params)
 }
 
-
-//删除管理员账号
+//创建管理员账号
 export const createUserMoudle = (params) => {
   let requestUrl = '/official/mgr/api/create-user';
   return $http.post(requestUrl, params)
