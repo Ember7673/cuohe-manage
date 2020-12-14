@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-12-08 18:32:09
- * @LastEditTime: 2020-12-11 17:11:13
+ * @LastEditTime: 2020-12-14 18:57:25
  * @FilePath: \cuohe-manage\src\router\index.js
  */
 import Vue from 'vue'
@@ -92,7 +92,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  base: '/manage'
 })
 Vue.use(VueRouter)
 
