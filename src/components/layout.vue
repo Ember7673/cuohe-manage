@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-15 15:14:54
+ * @LastEditTime: 2020-12-15 16:15:36
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -25,9 +25,9 @@
       </el-header>
 
       <el-container>
-        <el-aside width="200px" style="height: 100vh;background-color: #234D61">
+        <el-aside width="200px" style="height:100vh;background-color: #234D61">
           <el-col>
-            <el-menu default-active="2" @select="handleSelect" class="el-menu-vertical-demo" background-color="#234D61" text-color="#fff" active-text-color="#188F9F">
+            <el-menu :default-active="activerouter" @select="handleSelect" class="el-menu-vertical-demo" background-color="#234D61" text-color="#fff" active-text-color="#188F9F">
               <el-menu-item index="/">
                 <i class="el-icon-menu"></i>
                 <span slot="title">
@@ -58,7 +58,7 @@
           </el-col>
         </el-aside>
         <el-container>
-          <el-main style="height: 100vh;">
+          <el-main>
             <router-view />
           </el-main>
         </el-container>
@@ -74,11 +74,16 @@ export default {
   data () {
     return {
       userInfo: {},
-      isLogged: false
+      isLogged: false,
+      activerouter: '/'
     }
   },
   created () {
     this.isLogin()
+  },
+  mounted () {
+    this.activerouter = window.location.hash.replace('#', '');
+    console.log()
   },
   methods: {
     handleSelect (key, keyPath) {
@@ -125,6 +130,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/.el-menu-item.is-active {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
 /deep/.el-header {
   background-color: #234d61;
   color: #fff;

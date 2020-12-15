@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 11:01:43
- * @LastEditTime: 2020-12-11 17:55:46
+ * @LastEditTime: 2020-12-15 16:06:39
  * @FilePath: \cuohe-manage\src\components\list.vue
 -->
 <template>
@@ -26,8 +26,10 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination :current-page="pageindex" background layout="prev, pager, next" :page-size="10" :total="size" @current-change="currentChange">
-    </el-pagination>
+    <div class="listPagination">
+      <el-pagination :current-page="pageindex" background layout="prev, pager, next" :page-size="10" :total="size" @current-change="currentChange">
+      </el-pagination>
+    </div>
 
     <el-dialog customClass="details customDialog" title="需求详情" :visible.sync="curItemVisible">
       <div class="detailContent">
@@ -298,6 +300,9 @@ export default {
       border: none;
       margin: 20px auto;
     }
+  }
+  .listPagination {
+    margin-top: 20px;
   }
 }
 </style>

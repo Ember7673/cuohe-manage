@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 10:30:52
- * @LastEditTime: 2020-12-14 18:16:34
+ * @LastEditTime: 2020-12-15 15:54:30
  * @FilePath: \cuohe-manage\src\views\login\index.vue
 -->
 <template>
@@ -114,7 +114,8 @@ export default {
       activeName: '1',
       smsTimer: 40,
       isShowTimer: false,
-      loginType: '1'
+      loginType: '1',
+      isSendCode: false
     }
   },
   methods: {
@@ -125,9 +126,11 @@ export default {
     },
     //获取短信验证码
     getSMSCode () {
+      if (this.isSendCode) return;
       const me = this;
       this.$refs['superForm'].validateField(['phone_num'], error => {
         if (!error) {
+          me.isSendCode = true;
           const data = {
             reqid: uuid()
           };
@@ -141,6 +144,7 @@ export default {
               me.timer();
               me.isShowTimer = true;
             } else {
+              me.isSendCode = false;
               me.$message.error(res.data.message);
             }
           });
@@ -153,6 +157,7 @@ export default {
       let _timeInterval = setInterval(function () {
         if (me.smsTimer === 0) {
           me.isShowTimer = false;
+          me.isSendCode = false;
           me.smsTimer = 40;
           clearInterval(_timeInterval);
         } else if (me.smsTimer <= 40 && me.smsTimer >= 1) {
