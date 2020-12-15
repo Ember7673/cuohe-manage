@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:10:13
- * @LastEditTime: 2020-12-11 17:46:46
+ * @LastEditTime: 2020-12-15 15:28:06
  * @FilePath: \cuohe-manage\src\views\systemAccount\history.vue
 -->
 <template>
@@ -15,7 +15,7 @@
         </el-table-column>
         <el-table-column prop="account" label="账户名" width="180">
         </el-table-column>
-        <el-table-column prop="user_id" label="角色" width="180">
+        <el-table-column prop="user_id" label="user_id" width="180">
         </el-table-column>
         <el-table-column prop="message" label="事件">
         </el-table-column>
@@ -75,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 .history {
   .historyContent {
-    margin-top: 30px;
+    margin: 30px;
   }
 }
 </style>

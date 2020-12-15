@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 11:01:23
- * @LastEditTime: 2020-12-11 17:06:40
+ * @LastEditTime: 2020-12-15 15:26:35
  * @FilePath: \cuohe-manage\src\views\requirement\index.vue
 -->
 <template>
@@ -116,7 +116,7 @@ export default {
   .search {
     border: 1px solid #dcdfe6;
     padding: 15px;
-    margin-top: 20px;
+    margin: 20px 0;
 
     span {
       margin-right: 20px;

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-08 18:32:09
- * @LastEditTime: 2020-12-10 11:54:11
+ * @LastEditTime: 2020-12-15 15:14:19
  * @FilePath: \cuohe-manage\src\views\Home.vue
 -->
 <template>
@@ -19,3 +19,10 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.home {
+  text-align: center;
+  margin-top: 200px;
+  font-size: 30px;
+}
+</style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:55:07
- * @LastEditTime: 2020-12-14 18:49:07
+ * @LastEditTime: 2020-12-15 15:25:03
  * @FilePath: \cuohe-manage\src\components\userList.vue
 -->
 <template>
@@ -17,7 +17,7 @@
       </el-table-column>
       <el-table-column label="绑定邀请码">
         <template slot-scope="scope">
-          <el-popover placement="top-start" title="邀请人信息" width="200" trigger="hover" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+          <el-popover placement="top-start" title="邀请人信息" width="200" trigger="hover" :content="inviteUserInfo">
             <span style="cursor:pointer" slot="reference">
               {{scope.row.invite_code}}
             </span>
@@ -43,8 +43,10 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination :current-page="pageindex" background layout="prev, pager, next" :page-size="10" :total="size" @current-change="currentChange">
-    </el-pagination>
+    <div class="listPagination">
+      <el-pagination :current-page="pageindex" background layout="prev, pager, next" :page-size="10" :total="size" @current-change="currentChange">
+      </el-pagination>
+    </div>
 
     <el-dialog customClass="details customDialog" title="个人详情" :visible.sync="curItemVisible">
       <div class="detailContent">
@@ -138,7 +140,7 @@ export default {
           trigger: "blur"
         }],
       },
-      inviteUserInfo: {}
+      inviteUserInfo: ''
     }
   },
   created () {
@@ -206,19 +208,24 @@ export default {
     // 显示邀请人信息
     inviteCodeHover (row, column, cell) {
       if (column.label !== "绑定邀请码") return;
+      this.inviteUserInfo = '';
       getUserInfoFromInviteCodeMoudle({
         reqid: uuid(),
         invite_code: row.invite_code
       }).then(res => {
         const {
           status,
-          data,
+          user,
           message
         } = res.data;
         if (!status) {
-          this.inviteUserInfo = data;
-        } else if (status === '7009') {
-          this.inviteUserInfo = {};
+          if (Number(row.level) === 1) {
+            this.inviteUserInfo = '此邀请码由平台生成';
+          } else {            {
+              this.inviteUserInfo = '姓名：' + user.nickname + '手机号： ' + user.phone_num;
+            }          }
+        } else if (status === 7009) {
+          this.inviteUserInfo = '暂无邀请人信息';
         } else {
           this.$message.error(message);
         }
@@ -429,6 +436,9 @@ export default {
       border: none;
       margin: 20px auto;
     }
+  }
+  .listPagination {
+    margin-top: 20px;
   }
 
   /deep/ .el-form-item__content {

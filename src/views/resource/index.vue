@@ -107,7 +107,7 @@ export default {
   .search {
     border: 1px solid #dcdfe6;
     padding: 15px;
-    margin-top: 20px;
+    margin: 20px 0;
 
     span {
       margin-right: 20px;

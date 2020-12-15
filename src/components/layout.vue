@@ -1,12 +1,12 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-14 18:27:44
+ * @LastEditTime: 2020-12-15 15:14:54
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
   <div class="layout">
-    <el-container style="height: 500px; border: 1px solid #eee">
+    <el-container>
       <el-header>
         <div class="left">
           <p class="logo">logo</p>
@@ -46,7 +46,7 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">用户列表</span>
               </el-menu-item>
-              <el-menu-item index="/systemAccount">
+              <el-menu-item v-show="userInfo && Number(userInfo.level) !== 3" index="/systemAccount">
                 <i class="el-icon-setting"></i>
                 <span slot="title">系统账户</span>
               </el-menu-item>

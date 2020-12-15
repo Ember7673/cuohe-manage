@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 10:31:27
- * @LastEditTime: 2020-12-14 18:21:04
+ * @LastEditTime: 2020-12-15 15:23:25
  * @FilePath: \cuohe-manage\src\views\systemAccount\index.vue
 -->
 <template>
@@ -10,7 +10,7 @@
       <el-breadcrumb-item>系统账户</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="historyContent">
-      <el-button type="primary" size="mini" @click.stop="createUser">添加用户</el-button>
+      <el-button class="createUserBtn" type="primary" size="mini" @click.stop="createUser">添加用户</el-button>
       <el-table :data="managerList" style="width: 100%">
         <el-table-column prop="create_time" label="角色名" width="180">
         </el-table-column>
@@ -126,7 +126,7 @@ export default {
     },
     async currentChange (index) {
       this.pageindex = index;
-      this.managerList = await this.getmanagerListttMoudle(index);
+      this.managerList = await this.getmanagerList(index);
     },
     handelExamine (index, row) {
       deleteUserMoudle({
@@ -143,7 +143,6 @@ export default {
           this.managerList = await this.getmanagerList(1)
         } else {
           this.$message.error(message)
-          reject()
         }
       })
     },
@@ -169,7 +168,6 @@ export default {
               this.managerList = await this.getmanagerList(1)
             } else {
               this.$message.error(message)
-              reject()
             }
           })
         }
@@ -182,7 +180,11 @@ export default {
 <style lang="scss" scoped>
 .history {
   .historyContent {
-    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+  .createUserBtn {
+    margin-bottom: 20px;
+    float: right;
   }
 }
 </style>
