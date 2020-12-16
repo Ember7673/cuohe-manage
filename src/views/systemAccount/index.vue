@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 10:31:27
- * @LastEditTime: 2020-12-15 15:23:25
+ * @LastEditTime: 2020-12-16 18:54:34
  * @FilePath: \cuohe-manage\src\views\systemAccount\index.vue
 -->
 <template>
@@ -31,7 +31,7 @@
     <el-pagination :current-page="pageindex" background layout="prev, pager, next" :page-size="10" :total="managerListLen" @current-change="currentChange">
     </el-pagination>
 
-    <el-dialog customClass="createUser" title="创建账户" :visible.sync="createVisible">
+    <el-dialog customClass="createUser customDialog" title="创建账户" :visible.sync="createVisible">
       <el-form :model="superForm" :rules="rules" ref="superForm" label-width="100px">
         <el-form-item prop="account">
           <el-input placeholder="请输入账号" v-model="superForm.account"></el-input>

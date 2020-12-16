@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:55:07
- * @LastEditTime: 2020-12-15 15:59:45
+ * @LastEditTime: 2020-12-16 20:05:41
  * @FilePath: \cuohe-manage\src\components\userList.vue
 -->
 <template>
@@ -17,7 +17,19 @@
       </el-table-column>
       <el-table-column label="绑定邀请码">
         <template slot-scope="scope">
-          <el-popover placement="top-start" title="邀请人信息" width="200" trigger="hover" :content="inviteUserInfo">
+          <el-popover placement="top-start" title="邀请人信息" width="200" trigger="hover">
+            <div v-show="invaiteStatus === 2">
+              <p>
+                {{'姓名：' + inviteUserInfo.nickname }}
+              </p>
+              <p>{{'手机号： ' + inviteUserInfo.phone_num}}</p>
+            </div>
+            <div v-show="invaiteStatus === 1">
+              <p>此邀请码由平台生成</p>
+            </div>
+            <div v-show="invaiteStatus === 3">
+              <p>暂无邀请人信息</p>
+            </div>
             <span style="cursor:pointer" slot="reference">
               {{scope.row.invite_code}}
             </span>
@@ -26,19 +38,16 @@
       </el-table-column>
       <el-table-column prop="create_time" label="注册时间">
       </el-table-column>
-      <el-table-column label="专属客服手机号" width="150">
-        <template slot-scope="scope">
-          <span v-if="scope.row.cooperation_num">{{scope.row.cooperation_num}}</span>
-          <el-button v-else type="primary" size="mini" @click.stop="setCooperationNum(scope.$index, scope.row)">
-            设置专属客服手机号
-          </el-button>
-        </template>
+      <el-table-column label="专属客服手机号" width="150" prop="cooperation_num">
       </el-table-column>
       <el-table-column prop="status" label="状态" :formatter="statusFormatter">
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button v-show="scope.row.requirement_status === '已完善信息，未审核' || scope.row.requirement_status === '修改资料，未审核'" type="primary" size="mini" @click.stop="handelExamine(scope.$index, scope.row)">审核</el-button>
+          <el-button type="primary" size="mini" @click.stop="setCooperationNum(scope.$index, scope.row)">
+            设置专属客服手机号
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -140,7 +149,8 @@ export default {
           trigger: "blur"
         }],
       },
-      inviteUserInfo: ''
+      inviteUserInfo: {},
+      invaiteStatus: 0
     }
   },
   created () {
@@ -208,7 +218,8 @@ export default {
     // 显示邀请人信息
     inviteCodeHover (row, column, cell) {
       if (column.label !== "绑定邀请码") return;
-      this.inviteUserInfo = '';
+      this.inviteUserInfo = {};
+      this.invaiteStatus = 0;
       getUserInfoFromInviteCodeMoudle({
         reqid: uuid(),
         invite_code: row.invite_code
@@ -220,12 +231,15 @@ export default {
         } = res.data;
         if (!status) {
           if (Number(row.level) === 1) {
-            this.inviteUserInfo = '此邀请码由平台生成';
+            this.inviteUserInfo = {};
+            this.invaiteStatus = 1;
           } else {            {
-              this.inviteUserInfo = '姓名：' + user.nickname + '手机号： ' + user.phone_num;
+              this.inviteUserInfo = user;
+              this.invaiteStatus = 2;
             }          }
         } else if (status === 7009) {
-          this.inviteUserInfo = '暂无邀请人信息';
+          this.inviteUserInfo = {};
+          this.invaiteStatus = 3;
         } else {
           this.$message.error(message);
         }

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:10:13
- * @LastEditTime: 2020-12-15 15:28:06
+ * @LastEditTime: 2020-12-16 19:56:05
  * @FilePath: \cuohe-manage\src\views\systemAccount\history.vue
 -->
 <template>
@@ -15,7 +15,7 @@
         </el-table-column>
         <el-table-column prop="account" label="账户名" width="180">
         </el-table-column>
-        <el-table-column prop="user_id" label="user_id" width="180">
+        <el-table-column prop="user_id" :formatter="statusFormatter" label="操作对象id" width="180">
         </el-table-column>
         <el-table-column prop="message" label="事件">
         </el-table-column>
@@ -67,6 +67,15 @@ export default {
     async currentChange (index) {
       this.pageindex = index;
       this.historyList = await this.getoperateList(index);
+    },
+    statusFormatter (row) {
+      if (Number(row.user_id)) {
+        return row.user_id = row.user_id;
+      } else if (Number(row.requirement_id)) {
+        return row.user_id = row.requirement_id;
+      } else if (Number(row.resource_id)) {
+        return row.user_id = row.resource_id;
+      }
     }
   }
 }

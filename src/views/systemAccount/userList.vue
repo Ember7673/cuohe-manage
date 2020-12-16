@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:08:02
- * @LastEditTime: 2020-12-15 16:01:09
+ * @LastEditTime: 2020-12-16 18:56:45
  * @FilePath: \cuohe-manage\src\views\systemAccount\userList.vue
 -->
 <template>
@@ -11,7 +11,7 @@
     </el-breadcrumb>
     <div class="search">
       <span>用户查找：</span>
-      <el-input v-model="searchStr" placeholder="请输入姓名/手机号"></el-input>
+      <el-input v-model="searchStr" placeholder="请输入昵称/手机号"></el-input>
       <el-button type="primary" size="mini" @click="onSearch">查询</el-button>
     </div>
     <div>

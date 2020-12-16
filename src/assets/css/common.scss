@@ -8,7 +8,7 @@ body {
   color: #333;
   padding: 0;
   margin: 0;
-  font-family: '微软雅黑', 'Microsoft Yahei', 'Montserrat';
+  font-family: '微软雅黑', 'Microsoft Yahei';
   font-weight: 400;
 }
 
@@ -111,5 +111,13 @@ i {
 .createUser {
   /deep/ .el-form-item__content {
     margin-left: 0 !important;
+  }
+}
+
+.customDialog {
+  border-radius: 10px;
+
+  /deep/ .el-dialog__header {
+    border-radius: 10px 10px 0 0;
   }
 }

@@ -1,12 +1,14 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 11:01:43
- * @LastEditTime: 2020-12-15 16:06:39
+ * @LastEditTime: 2020-12-16 20:13:48
  * @FilePath: \cuohe-manage\src\components\list.vue
 -->
 <template>
   <div class="list">
-    <el-table ref="singleTable" highlight-current-row @row-click="handleCurrentChange" :data="list" stripe style="width: 100%">
+    <el-table ref="singleTable" highlight-current-row @cell-mouse-enter="userIdHover" @row-click="handleCurrentChange" :data="list" stripe style="width: 100%">
+      <el-table-column prop="id" label="需求id">
+      </el-table-column>
       <el-table-column prop="requirement_name" show-overflow-tooltip label="项目名称" width="180">
       </el-table-column>
       <el-table-column prop="description" show-overflow-tooltip label="需求介绍" width="180">
@@ -15,7 +17,20 @@
       </el-table-column>
       <el-table-column prop="requirement_create_time" label="创建时间">
       </el-table-column>
-      <el-table-column prop="user_id" label="创建者">
+      <el-table-column label="创建者id">
+        <template slot-scope="scope">
+          <el-popover placement="top-start" title="创建者信息" width="200" trigger="hover">
+            <div>
+              <p>昵称：{{createUserInfo.nickname}}</p>
+              <p>手机号：{{createUserInfo.phone_num}}</p>
+            </div>
+            <span style="cursor:pointer" slot="reference">
+              {{scope.row.user_id}}
+            </span>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column prop="user_nick_name" label="创建者昵称">
       </el-table-column>
       <el-table-column :formatter="statusFormatter" prop="requirement_status" label="状态">
       </el-table-column>
@@ -67,6 +82,7 @@
 
 <script>
 import { requirementInfoUpdateMoudle } from '@/api/requirement';
+import { getUserByIdMoudle } from '@/api/systemAccount'
 import { uuid } from '@/utils';
 export default {
   props: ['list', 'pageindex', 'size'],
@@ -74,7 +90,8 @@ export default {
     return {
       curItem: {},
       filesList: [],
-      curItemVisible: false
+      curItemVisible: false,
+      createUserInfo: {}
     }
   },
   methods: {
@@ -128,6 +145,30 @@ export default {
       let url = AVATARURL + this.filesList[index].download_name;
       window.location.href = url;
     },
+    userIdHover (row, column, cell) {
+      if (column.label !== "创建者id") return;
+      this.createUserInfo = {};
+      this.getUserById(row.user_id)
+    },
+    getUserById (id) {
+      getUserByIdMoudle({
+        reqid: uuid(),
+        id: Number(id)
+      }).then(res => {
+        const {
+          status,
+          user,
+          message
+        } = res.data;
+        if (!status) {
+          this.createUserInfo = user;
+        } else {
+          this.createUserInfo = {}
+          this.$message.error(message)
+        }
+
+      })
+    }
   }
 }
 </script>
@@ -186,7 +227,7 @@ export default {
       .descriptionContentEditor {
         margin-left: 105px;
         border: 1px solid #bfbfbf;
-        height: 100px;
+        height: 200px;
         overflow: hidden;
         overflow-y: scroll;
       }

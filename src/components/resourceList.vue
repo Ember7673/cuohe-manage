@@ -1,12 +1,14 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 16:48:10
- * @LastEditTime: 2020-12-15 16:06:21
+ * @LastEditTime: 2020-12-16 20:14:09
  * @FilePath: \cuohe-manage\src\components\resourceList.vue
 -->
 <template>
   <div class="list">
-    <el-table ref="singleTable" highlight-current-row @row-click="handleCurrentChange" :data="list" stripe style="width: 100%">
+    <el-table ref="singleTable" highlight-current-row @cell-mouse-enter="userIdHover" @row-click="handleCurrentChange" :data="list" stripe style="width: 100%">
+      <el-table-column prop="id" label="资源id">
+      </el-table-column>
       <el-table-column prop="resource_name" show-overflow-tooltip label="项目名称" width="180">
       </el-table-column>
       <el-table-column prop="description" show-overflow-tooltip label="资源介绍" width="180">
@@ -14,6 +16,21 @@
       <el-table-column prop="resource_type" label="资源类型">
       </el-table-column>
       <el-table-column prop="area" label="合作领域">
+      </el-table-column>
+      <el-table-column label="创建者id">
+        <template slot-scope="scope">
+          <el-popover placement="top-start" title="创建者信息" width="200" trigger="hover">
+            <div>
+              <p>昵称：{{createUserInfo.nickname}}</p>
+              <p>手机号：{{createUserInfo.phone_num}}</p>
+            </div>
+            <span style="cursor:pointer" slot="reference">
+              {{scope.row.user_id}}
+            </span>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column prop="user_nick_name" label="创建者昵称">
       </el-table-column>
       <el-table-column :formatter="statusFormatter" prop="resource_status" label="状态">
       </el-table-column>
@@ -37,16 +54,16 @@
             {{curItem.resource_name}}</p>
         </div>
         <div class="text description">
-          <p class="title">资源介绍</p>
+          <p class="title">资源介绍：</p>
           <p class="descriptionContent descriptionContentEditor" style="white-space: pre-wrap;">
             {{curItem.description}}</p>
         </div>
         <div class="text">
-          <p class="title">资源类型</p>
+          <p class="title">资源类型：</p>
           <span class="cooperationMethod">{{curItem.resource_type}}</span>
         </div>
         <div class="text">
-          <p class="title">合作领域</p>
+          <p class="title">合作领域：</p>
           <span class="cooperationMethod">{{curItem.area}}</span>
         </div>
         <div class="text">
@@ -69,6 +86,7 @@
 
 <script>
 import { resourceInfoUpdateMoudle } from '@/api/requirement';
+import { getUserByIdMoudle } from '@/api/systemAccount'
 import { uuid } from '@/utils';
 export default {
   props: ['list', 'pageindex', 'size'],
@@ -76,7 +94,8 @@ export default {
     return {
       curItem: {},
       filesList: [],
-      curItemVisible: false
+      curItemVisible: false,
+      createUserInfo: {}
     }
   },
   methods: {
@@ -130,6 +149,30 @@ export default {
       let url = AVATARURL + this.filesList[index].download_name;
       window.location.href = url;
     },
+    userIdHover (row, column, cell) {
+      if (column.label !== "创建者id") return;
+      this.createUserInfo = {};
+      this.getUserById(row.user_id)
+    },
+    getUserById (id) {
+      getUserByIdMoudle({
+        reqid: uuid(),
+        id: Number(id)
+      }).then(res => {
+        const {
+          status,
+          user,
+          message
+        } = res.data;
+        if (!status) {
+          this.createUserInfo = user;
+        } else {
+          this.createUserInfo = {}
+          this.$message.error(message)
+        }
+
+      })
+    }
   }
 }
 </script>
@@ -188,7 +231,7 @@ export default {
       .descriptionContentEditor {
         margin-left: 105px;
         border: 1px solid #bfbfbf;
-        height: 100px;
+        height: 200px;
         overflow: hidden;
         overflow-y: scroll;
       }

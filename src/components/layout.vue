@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-15 16:15:36
+ * @LastEditTime: 2020-12-16 20:18:38
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -14,7 +14,6 @@
         </div>
         <div class="right">
           <div class="login" v-show="isLogged">
-            <img src="" alt="">
             <span>欢迎，{{userInfo.account}}</span>
           </div>
           <div class="logout">
@@ -167,6 +166,8 @@ export default {
   }
   .login {
     width: 140px;
+    text-align: right;
+    padding-right: 20px;
   }
   .logout {
     width: 70px;

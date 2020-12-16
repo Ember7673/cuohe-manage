@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:31:51
- * @LastEditTime: 2020-12-14 18:15:57
+ * @LastEditTime: 2020-12-16 20:02:21
  * @FilePath: \cuohe-manage\src\api\systemAccount.js
  */
 import $http from '@/config/http';
@@ -52,3 +52,10 @@ export const createUserMoudle = (params) => {
   let requestUrl = '/official/mgr/api/create-user';
   return $http.post(requestUrl, params)
 }
+
+//通过id查询用户信息
+export const getUserByIdMoudle = (params) => {
+  let requestUrl = '/official/mgr/api/get-user-info-by-id';
+  return $http.post(requestUrl, params)
+}
+

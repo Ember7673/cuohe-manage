@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 10:30:52
- * @LastEditTime: 2020-12-15 15:54:30
+ * @LastEditTime: 2020-12-16 19:50:01
  * @FilePath: \cuohe-manage\src\views\login\index.vue
 -->
 <template>
@@ -21,8 +21,8 @@
               <el-tab-pane label="管理员" name="1">
                 <div class="loginbox managerLogin">
                   <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                    <el-form-item prop="phone_num">
-                      <el-input type="tel" tabindex="1" maxlength="11" placeholder="请输入手机号码" v-model="ruleForm.phone_num"></el-input>
+                    <el-form-item prop="account">
+                      <el-input type="text" tabindex="1" placeholder="请输入账号" v-model="ruleForm.account"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
                       <el-input type="password" tabindex="2" maxlength="16" placeholder="请输入密码" :show-password="true" v-model="ruleForm.password"></el-input>
@@ -37,7 +37,7 @@
                 <div class="loginbox superManagerLogin">
                   <el-form :model="superForm" :rules="rules" ref="superForm" label-width="100px">
                     <el-form-item prop="phone_num">
-                      <el-input type="tel" tabindex="1" maxlength="11" placeholder="请输入手机号码" v-model="superForm.phone_num"></el-input>
+                      <el-input type="text" tabindex="1" placeholder="请输入账号" v-model="superForm.phone_num"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
                       <el-input type="password" tabindex="2" maxlength="16" :show-password="true" placeholder="请输入密码" v-model="superForm.password"></el-input>
@@ -69,21 +69,6 @@ import { manageLoginMoudle, sendcodeMoudle, superManageLoginMoudle } from '@/api
 import { uuid } from '@/utils';
 export default {
   data () {
-    var checkPhone = (rule, value, callback) => {
-      const phoneReg = /^1[34578]\d{9}$$/;
-      if (!value) {
-        return callback(new Error("电话号码不能为空"));
-      }
-      if (!Number.isInteger(+value)) {
-        callback(new Error("请输入数字值"));
-      } else {
-        if (phoneReg.test(value)) {
-          callback();
-        } else {
-          callback(new Error("电话号码格式不正确"));
-        }
-      }
-    };
     return {
       ruleForm: {
         phone_num: '',
@@ -95,9 +80,14 @@ export default {
         valid_num: ''
       },
       rules: {
+        account: [{
+          required: true,
+          message: "请输入账号",
+          trigger: "blur"
+        }],
         phone_num: [{
           required: true,
-          validator: checkPhone,
+          message: '请输入账号',
           trigger: "blur"
         }],
         password: [{
@@ -128,28 +118,24 @@ export default {
     getSMSCode () {
       if (this.isSendCode) return;
       const me = this;
-      this.$refs['superForm'].validateField(['phone_num'], error => {
-        if (!error) {
-          me.isSendCode = true;
-          const data = {
-            reqid: uuid()
-          };
-          sendcodeMoudle(data).then(res => {
-            const {
-              status,
-              message
-            } = res.data;
-            if (!status) {
-              me.$message.success('验证码已发送');
-              me.timer();
-              me.isShowTimer = true;
-            } else {
-              me.isSendCode = false;
-              me.$message.error(res.data.message);
-            }
-          });
+      me.isSendCode = true;
+      const data = {
+        reqid: uuid()
+      };
+      sendcodeMoudle(data).then(res => {
+        const {
+          status,
+          message
+        } = res.data;
+        if (!status) {
+          me.$message.success('验证码已发送');
+          me.timer();
+          me.isShowTimer = true;
+        } else {
+          me.isSendCode = false;
+          me.$message.error(res.data.message);
         }
-      })
+      });
     },
     //短信验证码倒计时
     timer () {
@@ -172,7 +158,7 @@ export default {
           if (this.loginType === '1') {
             manageLoginMoudle({
               reqid: uuid(),
-              phone_num: this.ruleForm.phone_num,
+              phone_num: this.ruleForm.account,
               password: this.$md5(this.ruleForm.password),
               domain: 'mgr'
             }).then(res => {
