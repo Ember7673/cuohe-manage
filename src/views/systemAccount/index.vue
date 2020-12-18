@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 10:31:27
- * @LastEditTime: 2020-12-16 18:54:34
+ * @LastEditTime: 2020-12-18 19:53:34
  * @FilePath: \cuohe-manage\src\views\systemAccount\index.vue
 -->
 <template>
@@ -9,23 +9,25 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>系统账户</el-breadcrumb-item>
     </el-breadcrumb>
+    <el-button class="createUserBtn" type="primary" size="mini" @click.stop="createUser">添加用户</el-button>
     <div class="historyContent">
-      <el-button class="createUserBtn" type="primary" size="mini" @click.stop="createUser">添加用户</el-button>
-      <el-table :data="managerList" style="width: 100%">
-        <el-table-column prop="create_time" label="角色名" width="180">
-        </el-table-column>
-        <el-table-column prop="account" label="账户" width="180">
-        </el-table-column>
-        <el-table-column prop="password" label="密码">
-        </el-table-column>
-        <el-table-column prop="create_time" label="创建时间">
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click.stop="handelExamine(scope.$index, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <div class="listContent">
+        <el-table :data="managerList" style="width: 100%">
+          <el-table-column prop="create_time" label="角色名" width="180">
+          </el-table-column>
+          <el-table-column prop="account" label="账户" width="180">
+          </el-table-column>
+          <el-table-column prop="password" label="密码">
+          </el-table-column>
+          <el-table-column prop="create_time" label="创建时间">
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click.stop="handelExamine(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
 
     <el-pagination :current-page="pageindex" background layout="prev, pager, next" :page-size="10" :total="managerListLen" @current-change="currentChange">
@@ -181,6 +183,10 @@ export default {
 .history {
   .historyContent {
     margin-bottom: 20px;
+    /deep/ .el-table {
+      padding: 0 20px;
+      background: #fff;
+    }
   }
   .createUserBtn {
     margin-bottom: 20px;

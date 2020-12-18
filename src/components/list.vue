@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 11:01:43
- * @LastEditTime: 2020-12-16 20:13:48
+ * @LastEditTime: 2020-12-18 19:33:16
  * @FilePath: \cuohe-manage\src\components\list.vue
 -->
 <template>
@@ -37,6 +37,12 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button v-show="scope.row.requirement_status === '未审核'" type="primary" size="mini" @click.stop="handelExamine(scope.$index, scope.row)">通过</el-button>
+          <el-select v-show="scope.row.requirement_status !== '未审核'" v-model="scope.row.requirement_status" placeholder="请选择审核状态" @change="onSelectStatus(scope.row)">
+            <el-option key="未审核" label="未审核" value="1"></el-option>
+            <el-option key="已审核" label="已审核" value="2"></el-option>
+            <el-option key="已对接" label="已对接" value="3"></el-option>
+            <el-option key="已完成" label="已完成" value="4"></el-option>
+          </el-select>
         </template>
       </el-table-column>
     </el-table>
@@ -91,7 +97,7 @@ export default {
       curItem: {},
       filesList: [],
       curItemVisible: false,
-      createUserInfo: {}
+      createUserInfo: {},
     }
   },
   methods: {
@@ -124,15 +130,19 @@ export default {
       switch (Number(row.requirement_status)) {
         case 1:
           row.requirement_status = '未审核';
+          row.requirement_status_num = 1;
           break;
         case 2:
           row.requirement_status = '已审核';
+          row.requirement_status_num = 2;
           break;
         case 3:
           row.requirement_status = '已对接';
+          row.requirement_status_num = 3;
           break;
         case 4:
           row.requirement_status = '已完成';
+          row.requirement_status_num = 4;
           break;
       }
       return row.requirement_status;
@@ -168,6 +178,28 @@ export default {
         }
 
       })
+    },
+    onSelectStatus (row) {
+      console.log(row)
+      console.log(row.requirement_status)
+      this.curItem = row;
+      requirementInfoUpdateMoudle({
+        reqid: uuid(),
+        status: Number(row.requirement_status),
+        id: Number(row.id)
+      }).then(res => {
+        const {
+          status,
+          data,
+          message
+        } = res.data;
+        if (!status) {
+          this.$message.success('审核成功');
+          this.$emit('refresh')
+        } else {
+          this.$message.error(message);
+        }
+      })
     }
   }
 }
@@ -185,6 +217,7 @@ export default {
     /deep/ .el-dialog__title {
       color: #fff;
     }
+
     .action {
       position: absolute;
       top: 20px;

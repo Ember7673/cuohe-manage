@@ -84,7 +84,9 @@ export default {
 <style lang="scss" scoped>
 .history {
   .historyContent {
-    margin: 30px;
+    margin: 30px 0;
+    padding: 0 20px;
+    background: #fff;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-16 20:18:38
+ * @LastEditTime: 2020-12-18 19:55:29
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -129,8 +129,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .el-menu {
+  border-right: none;
+}
 /deep/.el-menu-item.is-active {
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: #f5f5f5 !important;
 }
 /deep/.el-header {
   background-color: #234d61;

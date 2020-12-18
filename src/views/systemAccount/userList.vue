@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:08:02
- * @LastEditTime: 2020-12-16 18:56:45
+ * @LastEditTime: 2020-12-18 19:45:41
  * @FilePath: \cuohe-manage\src\views\systemAccount\userList.vue
 -->
 <template>
@@ -14,7 +14,7 @@
       <el-input v-model="searchStr" placeholder="请输入昵称/手机号"></el-input>
       <el-button type="primary" size="mini" @click="onSearch">查询</el-button>
     </div>
-    <div>
+    <div class="listContent">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="全部" name="0,1,2,5,6">
           <ListModule :list="userList" :size="userLen" :pageindex="pageindex" @pageChange="pageChange" @refresh="refresh"></ListModule>
@@ -111,6 +111,7 @@ export default {
     border: 1px solid #dcdfe6;
     padding: 15px;
     margin: 20px 0;
+    background: #fff;
 
     span {
       margin-right: 20px;
@@ -127,6 +128,10 @@ export default {
     .el-button--mini.is-round {
       margin-left: 20px;
     }
+  }
+  .listContent {
+    padding: 20px;
+    background: #fff;
   }
 }
 </style>

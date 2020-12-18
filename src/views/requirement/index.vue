@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 11:01:23
- * @LastEditTime: 2020-12-15 15:26:35
+ * @LastEditTime: 2020-12-18 19:39:20
  * @FilePath: \cuohe-manage\src\views\requirement\index.vue
 -->
 <template>
@@ -14,7 +14,7 @@
       <el-input v-model="searchStr" placeholder="请输入项目名称/需求介绍"></el-input>
       <el-button type="primary" size="mini" @click="onSearch">查询</el-button>
     </div>
-    <div>
+    <div class="listContent">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="全部" name="1,2,3,4">
           <ListModule :list="requirementList" :size="requirementLen" :pageindex="pageindex" @pageChange="pageChange" @refresh="refresh"></ListModule>
@@ -114,6 +114,7 @@ export default {
 <style lang="scss" scoped>
 .requirementList {
   .search {
+    background: #fff;
     border: 1px solid #dcdfe6;
     padding: 15px;
     margin: 20px 0;
@@ -131,6 +132,10 @@ export default {
     .el-button--mini.is-round {
       margin-left: 20px;
     }
+  }
+  .listContent {
+    padding: 20px;
+    background: #fff;
   }
 }
 </style>
