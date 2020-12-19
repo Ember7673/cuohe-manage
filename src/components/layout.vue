@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-18 19:55:29
+ * @LastEditTime: 2020-12-19 10:36:38
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -26,7 +26,7 @@
       <el-container>
         <el-aside width="200px" style="height:100vh;background-color: #234D61">
           <el-col>
-            <el-menu :default-active="activerouter" @select="handleSelect" class="el-menu-vertical-demo" background-color="#234D61" text-color="#fff" active-text-color="#188F9F">
+            <el-menu :default-active="activerouter" @select="handleSelect" class="el-menu-vertical-demo" background-color="#234D61" text-color="#fff" active-text-color="#fff">
               <el-menu-item index="/">
                 <i class="el-icon-menu"></i>
                 <span slot="title">
@@ -133,7 +133,10 @@ export default {
   border-right: none;
 }
 /deep/.el-menu-item.is-active {
-  background-color: #f5f5f5 !important;
+  background-color: rgba(30, 114, 148, 0.5) !important;
+  border: 1px solid #1e7294;
+  border-left: none;
+  border-right: none;
 }
 /deep/.el-header {
   background-color: #234d61;
