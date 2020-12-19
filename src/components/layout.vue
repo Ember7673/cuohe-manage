@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-10 14:13:13
- * @LastEditTime: 2020-12-19 10:36:38
+ * @LastEditTime: 2020-12-19 13:59:44
  * @FilePath: \cuohe-manage\src\components\layout.vue
 -->
 <template>
@@ -28,13 +28,13 @@
           <el-col>
             <el-menu :default-active="activerouter" @select="handleSelect" class="el-menu-vertical-demo" background-color="#234D61" text-color="#fff" active-text-color="#fff">
               <el-menu-item index="/">
-                <i class="el-icon-menu"></i>
+                <i class="el-icon-s-home"></i>
                 <span slot="title">
                   首页
                 </span>
               </el-menu-item>
               <el-menu-item index="/requirementList">
-                <i class="el-icon-menu"></i>
+                <i class="el-icon-s-order"></i>
                 <span slot="title">需求列表</span>
               </el-menu-item>
               <el-menu-item index="/resourceList">
@@ -42,7 +42,7 @@
                 <span slot="title">资源列表</span>
               </el-menu-item>
               <el-menu-item index="/userList">
-                <i class="el-icon-setting"></i>
+                <i class="el-icon-user-solid"></i>
                 <span slot="title">用户列表</span>
               </el-menu-item>
               <el-menu-item v-show="userInfo && Number(userInfo.level) !== 3" index="/systemAccount">
@@ -50,7 +50,7 @@
                 <span slot="title">系统账户</span>
               </el-menu-item>
               <el-menu-item index="/history">
-                <i class="el-icon-setting"></i>
+                <i class="el-icon-s-data"></i>
                 <span slot="title">历史记录</span>
               </el-menu-item>
             </el-menu>

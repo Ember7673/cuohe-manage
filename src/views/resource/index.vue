@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-09 11:01:34
- * @LastEditTime: 2020-12-18 19:43:47
+ * @LastEditTime: 2020-12-19 13:55:00
  * @FilePath: \cuohe-manage\src\views\resource\index.vue
 -->
 <template>
@@ -23,6 +23,9 @@
           <ListModule :list="requirementList" :size="requirementLen" :pageindex="pageindex" @pageChange="pageChange" @refresh="refresh"></ListModule>
         </el-tab-pane>
         <el-tab-pane label="已审核" name="2">
+          <ListModule :list="requirementList" :size="requirementLen" :pageindex="pageindex" @pageChange="pageChange" @refresh="refresh"></ListModule>
+        </el-tab-pane>
+        <el-tab-pane label="已删除" name="3">
           <ListModule :list="requirementList" :size="requirementLen" :pageindex="pageindex" @pageChange="pageChange" @refresh="refresh"></ListModule>
         </el-tab-pane>
       </el-tabs>
@@ -84,7 +87,7 @@ export default {
     },
     async handleClick (e) {
       this.curStatus = e.name;
-      if (this.curStatus === '5') {
+      if (this.curStatus === '3') {
         this.isDelete = true;
         this.requirementList = await this.getRequirementList('1,2', 1, 10, this.searchStr, true);
       } else {

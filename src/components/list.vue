@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 11:01:43
- * @LastEditTime: 2020-12-18 19:33:16
+ * @LastEditTime: 2020-12-19 14:28:20
  * @FilePath: \cuohe-manage\src\components\list.vue
 -->
 <template>
@@ -107,7 +107,9 @@ export default {
       this.curItemVisible = true;
     },
     handelExamine (index, row) {
-      this.curItem = row;
+      if (row) {
+        this.curItem = row;
+      }
       requirementInfoUpdateMoudle({
         reqid: uuid(),
         status: 2,
@@ -119,8 +121,9 @@ export default {
           message
         } = res.data;
         if (!status) {
-          this.$message.success('审核成功');
+          this.$message.success('状态更新为已审核');
           this.$emit('refresh')
+          this.curItemVisible = false;
         } else {
           this.$message.error(message);
         }
@@ -153,7 +156,8 @@ export default {
     onDownload (index) {
       const AVATARURL = 'https://cuohe-1304244764.cos.ap-beijing.myqcloud.com/';
       let url = AVATARURL + this.filesList[index].download_name;
-      window.location.href = url;
+      // window.location.href = url;
+      this.download(url, this.filesList[index].name)
     },
     userIdHover (row, column, cell) {
       if (column.label !== "创建者id") return;
@@ -180,8 +184,6 @@ export default {
       })
     },
     onSelectStatus (row) {
-      console.log(row)
-      console.log(row.requirement_status)
       this.curItem = row;
       requirementInfoUpdateMoudle({
         reqid: uuid(),
@@ -194,12 +196,46 @@ export default {
           message
         } = res.data;
         if (!status) {
-          this.$message.success('审核成功');
+          this.$message.success(`状态更新为${row.requirement_status}`);
           this.$emit('refresh')
         } else {
           this.$message.error(message);
         }
       })
+    },
+    getBlob (url) {
+      return new Promise(resolve => {
+        const xhr = new XMLHttpRequest()
+        // 避免 200 from disk cache
+        url = url + `?r=${Math.random()}`
+        xhr.open('GET', url, true)
+        xhr.responseType = 'blob'
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            resolve(xhr.response)
+          }
+        }
+        xhr.send()
+      })
+    },
+    saveAs (blob, filename) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, filename)
+      } else {
+        const anchor = document.createElement('a')
+        const body = document.querySelector('body')
+        anchor.href = window.URL.createObjectURL(blob)
+        anchor.download = filename
+        anchor.style.display = 'none'
+        body.appendChild(anchor)
+        anchor.click()
+        body.removeChild(anchor)
+        window.URL.revokeObjectURL(anchor.href)
+      }
+    },
+    async download (url, newFileName) {
+      const blob = await this.getBlob(url)
+      this.saveAs(blob, newFileName)
     }
   }
 }

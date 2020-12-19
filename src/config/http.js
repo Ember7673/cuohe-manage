@@ -1,7 +1,7 @@
 /*
  * @Author: wangtengteng
  * @Date: 2020-11-16 09:53:29
- * @LastEditTime: 2020-12-14 18:53:43
+ * @LastEditTime: 2020-12-19 13:50:20
  * @FillPath: Do not edit
  */
 import axios from 'axios'
@@ -43,8 +43,7 @@ service.interceptors.response.use(response => {
     // return response;
   } else {
     if (status === 100) {
-      vm.$auth.removeUserInfo();
-      vm.$SignIn();
+      window.location.href = '/#/login';
       return;
     }
   }
