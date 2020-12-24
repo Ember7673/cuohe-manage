@@ -1,7 +1,7 @@
 <!--
  * @Author: wangtengteng
  * @Date: 2020-12-11 17:55:07
- * @LastEditTime: 2020-12-16 20:05:41
+ * @LastEditTime: 2020-12-24 18:06:41
  * @FilePath: \cuohe-manage\src\components\userList.vue
 -->
 <template>
@@ -164,10 +164,6 @@ export default {
     },
     handelExamine (index, row) {
       this.curItem = row;
-      if (!row.cooperation_num) {
-        this.$message.warning('请先填写专属客服电话');
-        return;
-      }
       userInfoUpdateMoudle({
         reqid: uuid(),
         status: 6,
@@ -220,6 +216,11 @@ export default {
       if (column.label !== "绑定邀请码") return;
       this.inviteUserInfo = {};
       this.invaiteStatus = 0;
+      if (Number(row.level) === 1) {
+        this.inviteUserInfo = {};
+        this.invaiteStatus = 1;
+        return
+      }
       getUserInfoFromInviteCodeMoudle({
         reqid: uuid(),
         invite_code: row.invite_code
@@ -230,13 +231,8 @@ export default {
           message
         } = res.data;
         if (!status) {
-          if (Number(row.level) === 1) {
-            this.inviteUserInfo = {};
-            this.invaiteStatus = 1;
-          } else {            {
-              this.inviteUserInfo = user;
-              this.invaiteStatus = 2;
-            }          }
+          this.inviteUserInfo = user;
+          this.invaiteStatus = 2;
         } else if (status === 7009) {
           this.inviteUserInfo = {};
           this.invaiteStatus = 3;
